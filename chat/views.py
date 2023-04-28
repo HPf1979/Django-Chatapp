@@ -4,7 +4,7 @@ from .models import Chat, Message
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url = '/login/')
+@login_required(login_url ='/login/')
 
 def index(request):
     if request.method == 'POST':
@@ -23,5 +23,5 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(request.POST.get('redirect'))
         else:
-            return render(request, 'auth/login.html', {'wrongPassword': True}, {'redirect': redirect})
+            return render(request, 'auth/login.html', {'wrongPassword': True,  'redirect': redirect})
     return render(request, 'auth/login.html', {'redirect': redirect})

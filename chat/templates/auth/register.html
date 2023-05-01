@@ -1,0 +1,20 @@
+<h1>SIGNUP</h1>
+
+<form method="POST" action="/register/">
+  {% csrf_token %}
+  <div>
+    <span>Name:</span>
+    <input name="username" type="text" />
+  </div>
+  <div>
+    <span>Password:</span>
+    <input name="password" type="password" />
+  </div>
+  <div>
+    <span>Confirm password:</span>
+    <input name="confirm-password" type="password" />
+  </div>
+  <div>
+    <button>Signup</button>
+  </div>
+</form>

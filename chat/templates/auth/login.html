@@ -21,4 +21,11 @@
       <button>Login</button>
     </div>
   </form>
+
+  <form method="POST" action="/register/">
+    {% csrf_token %}
+    <div>
+      <button>Signup</button>
+    </div>
+  </form>
 {% endblock %}

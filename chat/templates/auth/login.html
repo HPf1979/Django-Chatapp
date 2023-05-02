@@ -18,14 +18,8 @@
       <input name="password" type="password" />
     </div>
     <div>
-      <button>Login</button>
-    </div>
-  </form>
-
-  <form method="POST" action="/register/">
-    {% csrf_token %}
-    <div>
-      <button>Signup</button>
+      <button type="submit">Login</button>
+      <a href="/register/">Signup</a>
     </div>
   </form>
 {% endblock %}

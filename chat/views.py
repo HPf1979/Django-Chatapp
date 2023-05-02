@@ -1,3 +1,5 @@
+from pyexpat.errors import messages
+from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Chat, Message
@@ -28,8 +30,25 @@ def login_view(request):
     return render(request, 'auth/login.html', {'redirect': redirect})
 
 def register_view(request): 
+    redirect = request.GET.get('next')
+
     if request.method == 'POST':
-        user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-        user.save()
+        if request.POST['password'] == request.POST['confirm_password']:
+            if User.objects.filter(username=request.POST['username']).exists():               
+                messages.info(request, 'username is taken')
+                raise forms.ValidationError(
+                "password and confirm_password does not match")
+         
+            else:
+                user= User.objects.create_user(username=request.POST['username'], password= request.POST['password'])
+                user.save()
+                return render(request, 'auth/login.html', {'redirect': redirect})
+    
+        else:
+          messages.error(request, 'Password Not Match')
+          raise forms.ValidationError(
+            "password and confirm_password does not match")
+        
+    return render(request, 'auth/register.html')
  
-    return render (request, 'auth/register.html')
+

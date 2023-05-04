@@ -1,5 +1,13 @@
 <h1>SIGNUP</h1>
 
+{% if userAlreadyExist %}
+  <p>Benutzername existiert bereits</p>
+{% endif %}
+
+{% if passwordNotMatch %}
+  <p>Passwörter stimmen nicht überein</p>
+{% endif %}
+
 <form method="POST" action="/register/">
   {% csrf_token %}
   <div>

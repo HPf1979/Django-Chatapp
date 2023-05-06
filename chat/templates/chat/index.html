@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
   {% if request.user.is_authenticated %}
-    {% for message in messages %}
-      <div>
-        <span class="color-gray">[{{ message.created_at }}]</span>
-        {{ message.author }}: <i>{{ message.text }}</i>
-      </div>
-    {% endfor %}
+    <div id="messageContainer">
+      {% for message in messages %}
+        <div>
+          <span class="color-gray">[{{ message.created_at }}]</span>
+          {{ message.author }}: <i>{{ message.text }}</i>
+        </div>
+      {% endfor %}
+    </div>
 
     <script>
       async function sendMessage() {
         let fd = new FormData()
+        let token = '{{ csrf_token }}'
         fd.append('textmassage', messageField.value)
+        fd.append('csrfmiddlewaretoken', token)
         try {
           await fetch('/chat/', {
             method: 'POST',
             body: fd
           })
           console.log('Success!')
+          messageContainer.innerHTML += `<div><span class="color-gray"> [DATUM]  </span> {{request.user}} <i class="color-gray"> ${messageField.value}</i>  </div>`
         } catch (e) {
           console.error('An error occured', e)
         }
